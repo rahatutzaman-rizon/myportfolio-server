@@ -20,11 +20,11 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // await client.connect();
+    
 
     const blogCollection = client.db("blog").collection("blogs");
     const projectCollection = client.db("projects").collection("project");
-    
+    const  projectCollection2=client.db("sayem").collection("project");
     
     app.get("/blog", async (req, res) => {
       
@@ -59,6 +59,30 @@ async function run() {
         res.send(result);
      
   });
+
+////sayem
+
+ app.get("/project2", async (req, res) => {
+      
+      const result = await projectCollection2.find().toArray();
+      res.send(result);
+    
+  });
+
+  app.get("/project2/:id", async (req, res) => {
+   
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await projectCollection2.findOne(query);
+    
+        res.send(result);
+     
+  });
+
+
+
+
+
 
 
   } finally {
